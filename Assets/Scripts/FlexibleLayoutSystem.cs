@@ -1,0 +1,98 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using static UnityEditor.Experimental.GraphView.Port;
+using Random = System.Random;
+
+public class FlexibleLayoutSystem : MonoBehaviour
+{
+    [SerializeField] private CardData[] cards;
+    private CardData[] pairedCards;
+    [SerializeField] private GameObject cardPrefab;
+    [SerializeField] private Transform cardHolder;
+
+    private void Start()
+    {
+        SetCardLayout();
+    }
+
+    private void SetCardLayout()
+    {
+        float screenAspectRatio = (float)Screen.width / Screen.height;
+
+        if (screenAspectRatio >= 1.7f) // Widescreen 
+        {
+            SetupGrid(5, 4);
+        }
+        else if (screenAspectRatio >= 1.5f) // Standard landscape (e.g., 16:9)
+        {
+            SetupGrid(4, 3);
+        }
+        else if (screenAspectRatio >= 1.3f) // Standard (e.g., 4:3)
+        {
+            SetupGrid(4, 4); 
+        }
+        else if (screenAspectRatio > 1.0f) // Square-ish landscape (e.g., 5:4)
+        {
+            SetupGrid(4, 4); 
+        }
+        else if (screenAspectRatio <= 1.0f && screenAspectRatio >= 0.5f) // Portrait (9:16 or similar)
+        {
+            SetupGrid(3, 4); 
+        }
+        else // Very tall aspect ratio
+        {
+            SetupGrid(2, 4); 
+        }
+    }
+
+    private void ShuffleCardList(CardData[] list)
+    {
+        Random random = new Random();
+
+        for (int i = list.Length - 1; i > 0; i--)
+        {
+            int j = random.Next(0, i + 1);
+
+            CardData temp = list[i];
+            list[i] = list[j];
+            list[j] = temp;
+        }
+    }
+
+    private void SetupGrid(int column, int row)
+    {
+        pairedCards = new CardData[row * column];
+
+        ShuffleCardList(cards); // Shuffle card list to have a variety of cards
+
+        // Pull half the number of cards in the grid capacity from the shuffled list.
+        for (int i = 0; i < row * column / 2; i++)
+        {
+            pairedCards[i] = cards[i];
+        }
+
+        // Duplicate the cards to make pairs.
+        for (int i = row * column / 2; i < row * column; i++)
+        {
+            pairedCards[i] = pairedCards[i - row * column / 2];
+        }
+
+        // Shuffle the paired cards.
+        ShuffleCardList(pairedCards);
+
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < column; j++)
+            {
+                float xOffset = (column % 2 == 0) ? 0.5f : 0f;
+                float yOffset = (row % 2 == 0) ? -0.5f : 0f;
+
+                Vector3 pos = new Vector3((j - column / 2 + xOffset) * 1.75f, (row / 2 - i + yOffset) * 2f);
+                GameObject cardInstance = Instantiate(cardPrefab, pos, Quaternion.identity, cardHolder);
+                cardInstance.GetComponent<CardDataLoader>().cardData = pairedCards[i * column + j];
+            }
+        } 
+    }
+}
