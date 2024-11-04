@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = System.Random;
+using System.IO;
 
 public class FlexibleLayoutSystem : MonoBehaviour
 {
@@ -10,10 +11,41 @@ public class FlexibleLayoutSystem : MonoBehaviour
     private SO_CardData[] pairedCards;
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private Transform cardHolder;
+    [SerializeField] private SO_CardData[] cardData;
 
     private void Start()
     {
-        SetCardLayout();
+        Debug.Log(Application.persistentDataPath);
+        if(File.Exists(Application.persistentDataPath + "/savefile.json"))
+        {
+            SetupSavedFile();
+        }
+        else
+            SetCardLayout();
+    }
+
+    private void SetupSavedFile()
+    {
+        SaveSystem saveSystem = FindObjectOfType<SaveSystem>();
+        GameData gameData = saveSystem.LoadGame();
+
+        GameManager.Instance.gameTime = gameData.time;
+        ScoreManager.Instance.score = gameData.score;
+        GameManager.Instance.totalCards = gameData.totalCardsLeft;
+        ScoreManager.Instance.comboMultiplier = gameData.comboMultiplier;
+        foreach(CardInfo cardInfo in gameData.cardInfos)
+        {
+            GameObject cardInstance = Instantiate(cardPrefab, new Vector3(cardInfo.xPos, cardInfo.yPos), Quaternion.identity, cardHolder);
+            
+            foreach(SO_CardData card in cardData)
+            {
+                if (card.cardName == cardInfo.SO_Name)
+                {
+                    cardInstance.GetComponent<CardController>().cardData = card;
+                    break;
+                }
+            }
+        }
     }
 
     private void SetCardLayout()

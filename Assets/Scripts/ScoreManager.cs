@@ -6,8 +6,8 @@ using TMPro;
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager Instance;
-    public int Score { private set; get; } = 0;
-    private float comboMultiplier = 1f;
+    public int score = 0;
+    public float comboMultiplier = 1f;
     [SerializeField] private TextMeshProUGUI scoreText;
 
     private void Awake()
@@ -30,7 +30,7 @@ public class ScoreManager : MonoBehaviour
 
     private void Start()
     {
-        scoreText.text = "Score \n" + Score;
+        scoreText.text = "Score \n" + score;
     }
 
     // These ints are redundant, but they are needed to match the signature of the delegate.
@@ -39,9 +39,9 @@ public class ScoreManager : MonoBehaviour
     {
         if (isMatch)
         {
-            Score += (int)(100 * comboMultiplier);
+            score += (int)(100 * comboMultiplier);
             comboMultiplier += 0.5f;
-            scoreText.text = "Score \n" + Score;
+            scoreText.text = "Score \n" + score;
         }
         else
         {

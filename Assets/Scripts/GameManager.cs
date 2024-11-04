@@ -8,15 +8,21 @@ using Random = UnityEngine.Random;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    private float time = 0.0f;
+    [SerializeField] private GameObject cardsParent;
+    public GameObject Cards => cardsParent;
+    public float gameTime = 0.0f;
     public Material greenMat, redMat, whiteMat;
-    [HideInInspector] public List<GameObject> cardsToMatch;
+    /*[HideInInspector] */
+    public List<GameObject> cardsToMatch;
     // ints are representing the instanceIDs of the cards, and bool is either it is a match or not.
     public static event Action<int, int, bool> OnMatch;
     [SerializeField] private TextMeshProUGUI timerText;
-    public int totalCards = 0;
+    [HideInInspector] public int totalCards = 0;
     [SerializeField] private Material cardBackground;
     [SerializeField] private Texture[] cardTextures;
+    [SerializeField] private GameObject gameOverUI, scoreUI, timeUI, endScreenScore, endScreenTime;
+    [SerializeField] private AudioSource applauseSound;
+    public bool IsGameOver { private set; get; } = false;
 
     private void OnEnable()
     {
@@ -66,7 +72,7 @@ public class GameManager : MonoBehaviour
         {
             yield return null;
         }
-        
+
         string firstCardName = firstCardGO.GetComponent<CardController>().cardData.cardName;
         string secondCardName = secondCardGO.GetComponent<CardController>().cardData.cardName;
         if (firstCardName == secondCardName)
@@ -78,6 +84,18 @@ public class GameManager : MonoBehaviour
             if (totalCards == 0)
             {
                 Debug.Log("Game Over");
+                gameOverUI.SetActive(true);
+                applauseSound.Play();
+                endScreenScore.GetComponent<TextMeshProUGUI>().text =
+                    scoreUI.GetComponent<TextMeshProUGUI>().text;
+                endScreenTime.GetComponent<TextMeshProUGUI>().text = "Time\n" + ((int)gameTime).ToString();
+                scoreUI.SetActive(false);
+                timeUI.SetActive(false);
+                endScreenScore.SetActive(true);
+                endScreenTime.SetActive(true);
+                IsGameOver = true;
+                // As the game ends, there will be no save file needed.
+                System.IO.File.Delete(Application.persistentDataPath + "/savefile.json");
             }
         }
         else
@@ -90,7 +108,21 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        time += Time.deltaTime;
-        timerText.text = "Time \n" + ((int)time).ToString();
+        gameTime += Time.deltaTime;
+        timerText.text = "Time \n" + ((int)gameTime).ToString();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!gameOverUI.activeSelf)
+            {
+                Time.timeScale = 0;
+                gameOverUI.SetActive(true);
+            }
+            else
+            {
+                Time.timeScale = 1;
+                gameOverUI.SetActive(false);
+            }
+        }
     }
 }

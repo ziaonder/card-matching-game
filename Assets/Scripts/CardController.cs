@@ -33,7 +33,10 @@ public class CardController : MonoBehaviour, IClickable
 
     private void Update()
     {
-        if(Time.time > 3 && currentState == State.GettingHidden)
+        if(Time.timeScale == 0)
+            return;
+
+        if (Time.time > 3 && currentState == State.GettingHidden)
         {
             if (isFlippedToFrontLast)
             {

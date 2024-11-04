@@ -19,7 +19,10 @@ public class InputController : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetMouseButtonDown(0) || Input.touchCount > 0)
+        if(Time.timeScale == 0)
+            return;
+
+        if (Input.GetMouseButtonDown(0) || Input.touchCount > 0)
         {
             Vector3 inputPos;
             if(Input.touchCount > 0)

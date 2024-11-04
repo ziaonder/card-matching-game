@@ -1,5 +1,5 @@
 using UnityEngine;
-
+[System.Serializable]
 [CreateAssetMenu(fileName = "NewCardData", menuName = "Card Game/Card Data")]
 public class SO_CardData : ScriptableObject
 {
