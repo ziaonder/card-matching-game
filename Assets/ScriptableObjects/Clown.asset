@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Clown
   cardImage: {fileID: 21300000, guid: 49a81c25339c6854ab62412df94baa91, type: 3}
+  material: {fileID: 2100000, guid: 94e0489e4384dc94dad2ce6ae7ae3786, type: 2}

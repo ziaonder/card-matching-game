@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Vampire
   cardImage: {fileID: 21300000, guid: 076302e86f5a05b46833c21a5cb48ef9, type: 3}
+  material: {fileID: 2100000, guid: 52247d996066c4b4d8f67bba3e65f54d, type: 2}

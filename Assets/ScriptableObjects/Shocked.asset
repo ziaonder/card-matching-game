@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Shocked
   cardImage: {fileID: 21300000, guid: ab6c0847cad203e41b50899168eb91bb, type: 3}
+  material: {fileID: 2100000, guid: de837a9591d04a8478bb6ffbf7c13244, type: 2}

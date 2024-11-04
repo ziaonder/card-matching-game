@@ -2,13 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.Port;
 using Random = System.Random;
 
 public class FlexibleLayoutSystem : MonoBehaviour
 {
-    [SerializeField] private CardData[] cards;
-    private CardData[] pairedCards;
+    [SerializeField] private SO_CardData[] cards;
+    private SO_CardData[] pairedCards;
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private Transform cardHolder;
 
@@ -47,7 +46,7 @@ public class FlexibleLayoutSystem : MonoBehaviour
         }
     }
 
-    private void ShuffleCardList(CardData[] list)
+    private void ShuffleCardList(SO_CardData[] list)
     {
         Random random = new Random();
 
@@ -55,7 +54,7 @@ public class FlexibleLayoutSystem : MonoBehaviour
         {
             int j = random.Next(0, i + 1);
 
-            CardData temp = list[i];
+            SO_CardData temp = list[i];
             list[i] = list[j];
             list[j] = temp;
         }
@@ -63,7 +62,7 @@ public class FlexibleLayoutSystem : MonoBehaviour
 
     private void SetupGrid(int column, int row)
     {
-        pairedCards = new CardData[row * column];
+        pairedCards = new SO_CardData[row * column];
 
         ShuffleCardList(cards); // Shuffle card list to have a variety of cards
 
@@ -91,7 +90,9 @@ public class FlexibleLayoutSystem : MonoBehaviour
 
                 Vector3 pos = new Vector3((j - column / 2 + xOffset) * 1.75f, (row / 2 - i + yOffset) * 2f);
                 GameObject cardInstance = Instantiate(cardPrefab, pos, Quaternion.identity, cardHolder);
-                cardInstance.GetComponent<CardDataLoader>().cardData = pairedCards[i * column + j];
+                cardInstance.GetComponent<CardController>().cardData = pairedCards[i * column + j];
+                // This info will later be used for instantiating cards from a saved file.
+                cardInstance.GetComponent<CardController>().SetPosition(i, j);
             }
         } 
     }

@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: InLove
   cardImage: {fileID: 21300000, guid: 03c53cb2275caeb499b436099669ae39, type: 3}
+  material: {fileID: 2100000, guid: 2fd787b624eb4e5479412c0edbf6c7bd, type: 2}

@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Angry
   cardImage: {fileID: 21300000, guid: c8440181ce4a5934c9f6d7c2de91ba60, type: 3}
+  material: {fileID: 2100000, guid: 41fa77557eaad3345bac89140d377a1c, type: 2}

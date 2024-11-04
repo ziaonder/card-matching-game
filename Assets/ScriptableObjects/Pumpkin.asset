@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Pumpkin
   cardImage: {fileID: 21300000, guid: 6dae0ebaf05f62d428d1c637ddfde681, type: 3}
+  material: {fileID: 2100000, guid: a1c92f1d3f8563e47be9aa606f2d9c66, type: 2}

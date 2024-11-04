@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Smiley
   cardImage: {fileID: 21300000, guid: c8d6c7d267828064787f25cd28276def, type: 3}
+  material: {fileID: 2100000, guid: b3d7d424febc685458715381933a914b, type: 2}

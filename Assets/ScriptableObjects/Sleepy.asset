@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Sleepy
   cardImage: {fileID: 21300000, guid: 027c7d849348b124488ee19d7c874ed7, type: 3}
+  material: {fileID: 2100000, guid: 9cb36c3574b7a694b8ae28a90c24e3c2, type: 2}

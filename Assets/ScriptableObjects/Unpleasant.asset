@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Unpleasant
   cardImage: {fileID: 21300000, guid: ffac15f3ae566594895ca3db18da152b, type: 3}
+  material: {fileID: 2100000, guid: 3d4e78263538bb14c9fab4dd63d32cd1, type: 2}

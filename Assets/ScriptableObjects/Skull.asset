@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Skull
   cardImage: {fileID: 21300000, guid: f5e46cd749889444894d167e8076c3dd, type: 3}
+  material: {fileID: 2100000, guid: 8847b2398b2eb2a41af2606adfc38347, type: 2}

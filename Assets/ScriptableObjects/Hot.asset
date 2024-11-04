@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Hot
   cardImage: {fileID: 21300000, guid: 92a045278082c0e49b383c711cf6b1d7, type: 3}
+  material: {fileID: 2100000, guid: 1bbf3e175046b404283d5c2eafbc7184, type: 2}

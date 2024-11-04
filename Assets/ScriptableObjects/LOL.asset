@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: LOL
   cardImage: {fileID: 21300000, guid: 29375e447a0a399408fc39ac6f02b165, type: 3}
+  material: {fileID: 2100000, guid: 9b3e3a2f93edbda4bad71747d6755652, type: 2}
