@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        cardsToMatch.Clear();
         timerText.text = "Time \n" + 0;
         cardBackground.mainTexture = cardTextures[Random.Range(0, 3)];
     }
@@ -83,7 +84,6 @@ public class GameManager : MonoBehaviour
             totalCards -= 2;
             if (totalCards == 0)
             {
-                Debug.Log("Game Over");
                 gameOverUI.SetActive(true);
                 applauseSound.Play();
                 endScreenScore.GetComponent<TextMeshProUGUI>().text =

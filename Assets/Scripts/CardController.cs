@@ -6,14 +6,15 @@ public class CardController : MonoBehaviour, IClickable
 {
     [HideInInspector] public SO_CardData cardData;
     private int row, column;
-    public float timeForStateChange = 0f;
+    [HideInInspector] public float timeForStateChange = 0f;
     public enum State { GettingHidden, RotatingBack, RotatingFront, Front, Back, FlashingRed, FlashingGreen}
     public State currentState = State.GettingHidden;
     public State CurrentState => currentState;
-    public int instanceID;
+    [HideInInspector] public int instanceID;
     [SerializeField] private AudioSource cardFlipSound, matchSound;
     [SerializeField] private AudioClip matchClip, mismatchClip;
     private bool isFlippedToFrontLast = true;
+    private float startTime;
 
     private void OnEnable()
     {
@@ -29,6 +30,7 @@ public class CardController : MonoBehaviour, IClickable
     {
         StartCoroutine(SetImage());
         instanceID = gameObject.GetInstanceID();
+        startTime = Time.time;
     }
 
     private void Update()
@@ -36,7 +38,7 @@ public class CardController : MonoBehaviour, IClickable
         if(Time.timeScale == 0)
             return;
 
-        if (Time.time > 3 && currentState == State.GettingHidden)
+        if (Time.time - startTime > 3 && currentState == State.GettingHidden)
         {
             if (isFlippedToFrontLast)
             {

@@ -11,7 +11,7 @@ public class FlexibleLayoutSystem : MonoBehaviour
     private SO_CardData[] pairedCards;
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private Transform cardHolder;
-    [SerializeField] private SO_CardData[] cardData;
+    //[SerializeField] private SO_CardData[] cardData;
 
     private void Start()
     {
@@ -37,7 +37,7 @@ public class FlexibleLayoutSystem : MonoBehaviour
         {
             GameObject cardInstance = Instantiate(cardPrefab, new Vector3(cardInfo.xPos, cardInfo.yPos), Quaternion.identity, cardHolder);
             
-            foreach(SO_CardData card in cardData)
+            foreach(SO_CardData card in cards)
             {
                 if (card.cardName == cardInfo.SO_Name)
                 {
