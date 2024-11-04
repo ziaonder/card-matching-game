@@ -25,10 +25,19 @@ public class InputController : MonoBehaviour
         if (Input.GetMouseButtonDown(0) || Input.touchCount > 0)
         {
             Vector3 inputPos;
-            if(Input.touchCount > 0)
-                inputPos = Input.GetTouch(0).position;
-            else
+
+            if (Input.GetMouseButtonDown(0))
                 inputPos = Input.mousePosition;
+            else if (Input.touchCount > 0)
+            {
+                Touch touch = Input.GetTouch(0);
+                if (touch.phase == TouchPhase.Began)
+                    inputPos = Input.GetTouch(0).position;
+                else
+                    return;
+            }
+            else
+                return;
 
             Ray ray = Camera.main.ScreenPointToRay(inputPos);
             RaycastHit hit;
