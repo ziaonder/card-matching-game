@@ -63,6 +63,7 @@ public class FlexibleLayoutSystem : MonoBehaviour
     private void SetupGrid(int column, int row)
     {
         pairedCards = new SO_CardData[row * column];
+        GameManager.Instance.totalCards = row * column;
 
         ShuffleCardList(cards); // Shuffle card list to have a variety of cards
 

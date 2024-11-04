@@ -11,6 +11,8 @@ public class CardController : MonoBehaviour, IClickable
     public State currentState = State.GettingHidden;
     public State CurrentState => currentState;
     public int instanceID;
+    [SerializeField] private AudioSource cardFlipSound;
+    private bool isFlippedToFrontLast = true;
 
     private void OnEnable()
     {
@@ -32,6 +34,11 @@ public class CardController : MonoBehaviour, IClickable
     {
         if(Time.time > 3 && currentState == State.GettingHidden)
         {
+            if (isFlippedToFrontLast)
+            {
+                cardFlipSound.Play();
+                isFlippedToFrontLast = false;
+            }
             transform.rotation = Quaternion.Lerp(Quaternion.Euler(0, 0, 0), 
                 Quaternion.Euler(0, 180, 0), timeForStateChange);
 
@@ -47,6 +54,11 @@ public class CardController : MonoBehaviour, IClickable
         switch (currentState)
         {
             case State.RotatingFront:
+                if (!isFlippedToFrontLast)
+                {
+                    cardFlipSound.Play();
+                    isFlippedToFrontLast = true;
+                }
                 if (timeForStateChange < 1)
                     timeForStateChange += Time.deltaTime * 2;
                 else
@@ -59,6 +71,11 @@ public class CardController : MonoBehaviour, IClickable
                     Quaternion.Euler(0, 0, 0), timeForStateChange);
                 break;
             case State.RotatingBack:
+                if (isFlippedToFrontLast)
+                {
+                    cardFlipSound.Play();
+                    isFlippedToFrontLast = false;
+                }
                 if (timeForStateChange < 1)
                 {
                     timeForStateChange += Time.deltaTime * 2;

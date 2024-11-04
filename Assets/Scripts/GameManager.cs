@@ -2,15 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using TMPro;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     private float time = 0.0f;
     public Material greenMat, redMat, whiteMat;
-    public List<GameObject> cardsToMatch;
+    [HideInInspector] public List<GameObject> cardsToMatch;
     // ints are representing the instanceIDs of the cards, and bool is either it is a match or not.
     public static event Action<int, int, bool> OnMatch;
+    [SerializeField] private TextMeshProUGUI timerText;
+    public int totalCards = 0;
+    [SerializeField] private Material cardBackground;
+    [SerializeField] private Texture[] cardTextures;
 
     private void OnEnable()
     {
@@ -25,9 +31,15 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         if (Instance != null && Instance != this)
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         else
             Instance = this;
+    }
+
+    private void Start()
+    {
+        timerText.text = "Time \n" + 0;
+        cardBackground.mainTexture = cardTextures[Random.Range(0, 3)];
     }
 
     private void GetCardsToMatch(GameObject go)
@@ -62,6 +74,11 @@ public class GameManager : MonoBehaviour
             // Match!
             OnMatch?.Invoke(firstCardGO.GetComponent<CardController>().instanceID,
                 secondCardGO.GetComponent<CardController>().instanceID, true);
+            totalCards -= 2;
+            if (totalCards == 0)
+            {
+                Debug.Log("Game Over");
+            }
         }
         else
         {
@@ -74,5 +91,6 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         time += Time.deltaTime;
+        timerText.text = "Time \n" + ((int)time).ToString();
     }
 }
