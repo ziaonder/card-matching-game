@@ -7,6 +7,7 @@ using System.IO;
 public class UIButtonController : MonoBehaviour
 {
     private string saveFilePath;
+    public GameObject gameOverUI;
     public void OnQuitButtonClicked()
     {
         if(SceneManager.GetActiveScene().name == "Main" && !GameManager.Instance.IsGameOver)
@@ -53,6 +54,20 @@ public class UIButtonController : MonoBehaviour
         {
             // Couldn't have time to implement UI for it.
             Debug.LogWarning("Save file not found at " + saveFilePath);
+        }
+    }
+
+    public void OnPaused()
+    {
+        if (!gameOverUI.activeSelf)
+        {
+            Time.timeScale = 0;
+            gameOverUI.SetActive(true);
+        }
+        else
+        {
+            Time.timeScale = 1;
+            gameOverUI.SetActive(false);
         }
     }
 }
