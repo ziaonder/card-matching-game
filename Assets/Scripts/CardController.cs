@@ -11,7 +11,8 @@ public class CardController : MonoBehaviour, IClickable
     public State currentState = State.GettingHidden;
     public State CurrentState => currentState;
     public int instanceID;
-    [SerializeField] private AudioSource cardFlipSound;
+    [SerializeField] private AudioSource cardFlipSound, matchSound;
+    [SerializeField] private AudioClip matchClip, mismatchClip;
     private bool isFlippedToFrontLast = true;
 
     private void OnEnable()
@@ -158,7 +159,19 @@ public class CardController : MonoBehaviour, IClickable
         if (instanceID1 == gameObject.GetInstanceID() || instanceID2 == gameObject.GetInstanceID())
         {
             timeForStateChange = 0f;
-            currentState = isItMatch ? State.FlashingGreen : State.FlashingRed;
+            if(isItMatch)
+            {
+                currentState = State.FlashingGreen;
+                matchSound.clip = matchClip;
+                matchSound.Play();
+            }
+            else
+            {
+                currentState = State.FlashingRed;
+                matchSound.clip = mismatchClip;
+                matchSound.Play();
+            }
+            //currentState = isItMatch ? State.FlashingGreen : State.FlashingRed;
         }
 
     }
