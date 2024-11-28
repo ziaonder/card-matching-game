@@ -176,8 +176,12 @@ public class CardController : MonoBehaviour, IClickable
                 matchSound.clip = mismatchClip;
                 matchSound.Play();
             }
-            //currentState = isItMatch ? State.FlashingGreen : State.FlashingRed;
         }
-
+        // Add this else-if to handle cards stuck in Front state
+        else if (currentState == State.Front)
+        {
+            timeForStateChange = 0f;
+            currentState = State.RotatingBack;
+        }
     }
 }
