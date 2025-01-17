@@ -5,6 +5,8 @@ Features;
 - Different card layouts for different device resolutions.
 - A scoring mechanism that rewards you for consecutive matches.
 
+Made with Unity.
+
 ## Screenshots
 ![Alt Text](Assets/Textures/Screenshots/no-name-game_zkAE7rqFfs.png)
 ![Alt Text](Assets/Textures/Screenshots/no-name-game_EHRVWTqlsm.png)
